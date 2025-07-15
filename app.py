@@ -11,13 +11,11 @@ import uuid
 import os
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'fallback_dev_key')
+app.secret_key = 'fallback_dev_key'
 
 # ------------------- AWS DynamoDB + SNS Setup ------------------- #
-AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
-SNS_TOPIC_ARN = os.environ.get('SNS_TOPIC_ARN')
-if not SNS_TOPIC_ARN:
-    raise RuntimeError("❌ SNS_TOPIC_ARN not set in environment variables")
+AWS_REGION = 'us-east-1'
+SNS_TOPIC_ARN = 'arn:aws:sns:us-east-1:604665149129:fixitnow_Topic'
 
 dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
 sns = boto3.client('sns', region_name=AWS_REGION)
