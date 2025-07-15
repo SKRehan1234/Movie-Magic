@@ -252,8 +252,15 @@
     }
   }
 
-  const movieKey = Object.keys(movieInfo).find(key => key.toLowerCase() === movie.toLowerCase());
-  const movieData = movieInfo[movieKey] || movieInfo.smurfs;
+ const movieParam = movie.toLowerCase().replace(/[\s:]/g, '');
+const movieKey = Object.keys(movieInfo).find(
+  key => key.toLowerCase().replace(/[\s:]/g, '') === movieParam
+);
+  const movieData = movieInfo[movieKey] || {
+  title: "Unknown Movie",
+  genre: "Unknown Genre",
+  image: "https://via.placeholder.com/64x96.png?text=No+Image"
+};
   const storedTitle = sessionStorage.getItem("selectedMovieTitle");
   const storedTime = sessionStorage.getItem("selectedShowtime");
   document.getElementById('movie-title').textContent = storedTitle || movieData.title;
