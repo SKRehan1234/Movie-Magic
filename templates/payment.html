@@ -372,8 +372,8 @@ function redirectToThankYou() {
     })
     .then(data => {
       console.log("✅ Booking confirmed:", data);
-      // Build thankyou redirect URL safely
-      const redirectUrl = `{{ url_for('thankyou') }}?movie=${encodeURIComponent(movie)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&theatre=${encodeURIComponent(theatre)}&seats=${encodeURIComponent(seats)}&tickets=${tickets}&price=${price}`;
+      const imageUrl = encodeURIComponent(movieData.image);
+      const redirectUrl = `{{ url_for('thankyou') }}?movie=${encodeURIComponent(movie)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&theatre=${encodeURIComponent(theatre)}&seats=${encodeURIComponent(seats)}&tickets=${tickets}&price=${price}&image=${encodeURIComponent(movieData.image)}`;
       window.location.href = redirectUrl;
     })
     .catch(error => {

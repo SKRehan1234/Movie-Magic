@@ -59,7 +59,7 @@
 
                 <!-- Movie Info -->
                 <div class="flex items-center space-x-4 mb-8 p-4 bg-gray-50 rounded-lg">
-                    <img src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Movie" class="w-20 h-30 object-cover rounded-lg">
+                    <img id="movie-poster" src="" alt="Movie" class="w-20 h-30 object-cover rounded-lg">
                     <div>
                         <h2 id="movieTitle" class="text-xl font-bold text-gray-900"></h2>
                         <p class="text-gray-600">Sci-Fi, Adventure, Drama</p>
@@ -205,15 +205,16 @@
         </div>
     </div>
     <script>
-  const params = new URLSearchParams(window.location.search);
-
-  document.getElementById("movieTitle").textContent = decodeURIComponent(params.get("movie") || "");
-  document.getElementById("movieDate").textContent = params.get("date");
-  document.getElementById("movieTime").textContent = params.get("time");
-  document.getElementById("theatre").textContent = params.get("theatre");
-  document.getElementById("seats").textContent = params.get("seats");
-  document.getElementById("ticketCount").textContent = params.get("tickets");
-  document.getElementById("totalPrice").textContent = "₹" + params.get("price");
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieImage = urlParams.get('image') || 'https://via.placeholder.com/64x96.png?text=No+Image';
+  document.getElementById('movie-poster').src = decodeURIComponent(movieImage);
+  document.getElementById("movieTitle").textContent = decodeURIComponent(urlParams.get("movie") || "");
+  document.getElementById("movieDate").textContent = urlParams.get("date");
+  document.getElementById("movieTime").textContent = urlParams.get("time");
+  document.getElementById("theatre").textContent = urlParams.get("theatre");
+  document.getElementById("seats").textContent = urlParams.get("seats");
+  document.getElementById("ticketCount").textContent = urlParams.get("tickets");
+  document.getElementById("totalPrice").textContent = "₹" + urlParams.get("price");
 </script>
 </body>
 </html>
