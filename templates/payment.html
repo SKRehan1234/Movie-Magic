@@ -285,7 +285,6 @@ function validatePaymentForm() {
   
 
   if (payMethod === "card") {
-    
     const cardNumber = document.getElementById("card-number").value.trim();
     const expiry = document.getElementById("expiry").value.trim();
     const cvv = document.getElementById("cvv").value.trim();
@@ -344,6 +343,8 @@ function redirectToThankYou() {
   const movieTimeText = document.getElementById("movie-time").textContent;
   const [date, time] = movieTimeText.includes(" at ") ? movieTimeText.split(" at ") : ["Unknown", "Unknown"];
   const theatre = urlParams.get("theatre") || "Cinema Hall 1";
+  console.log("🎥 Theatre from URL:", theatre);
+  document.getElementById("theatre-name").textContent = theatre;
   const seats = document.getElementById("seat-list").textContent || "No seats selected";
   const tickets = document.getElementById("ticket-count").textContent || "0";
   const price = document.getElementById("total-amount").textContent.replace("₹", "") || "0.00";
@@ -383,6 +384,13 @@ function redirectToThankYou() {
       payBtn.textContent = `Pay ₹${price}`;
     });
 }
+</script>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const theatreElement = document.getElementById("theatre-name");
+    if (theatreElement && theatre) {
+        theatreElement.textContent = decodeURIComponent(theatre);
+    }
 </script>
 </body>
 </html>

@@ -135,19 +135,21 @@ def dashboard():
 
 @app.route("/movie_details")
 def movie_details():
-    movie_id = request.args.get("id")  # leave as string
+    movie_id = request.args.get("id")
+    theatre = request.args.get("theatre", "Not specified")
     if not movie_id:
         return "Movie ID not provided", 400
-    print(f"🔍 Fetching movie with id = {movie_id}")  
+    print(f"🔍 Fetching movie with id = {movie_id}")
     try:
         movie = get_movie_by_id(movie_id)
         if not movie:
             print(f"❌ Movie with id {movie_id} not found in DB")
             return f"Movie with id {movie_id} not found in DB", 404
-        return render_template("movie_details.html", movie=movie)
+        return render_template("movie_details.html", movie=movie, theatre=theatre)
     except Exception as e:
         print(f"❌ Error fetching movie from DB: {e}")
         return "Internal Server Error", 500
+    
 @app.route('/movies')
 def movies():
     movies = list(movies_collection.find())
@@ -169,6 +171,7 @@ def seat_selection():
     showtime = request.args.get('showtime')
     movie = get_movie_by_id(movie_id)
     return render_template('seat_selection.html', movie=movie, theatre=theatre, showtime=showtime)
+
 @app.route('/api/book', methods=['POST'])
 def book_seats():
     data = request.get_json()
@@ -183,7 +186,13 @@ def book_seats():
 
 @app.route('/payment')
 def payment():
-    return render_template('payment.html')
+    movie = request.args.get('movie')
+    time = request.args.get('time')
+    seats = request.args.get('seats')
+    total = request.args.get('total')
+    prices = request.args.get('prices')
+    theatre = request.args.get('theatre')
+    return render_template('payment.html', movie=movie, time=time, seats=seats, total=total, prices=prices, theatre=theatre)
 
 @app.route('/thankyou')
 def thankyou():

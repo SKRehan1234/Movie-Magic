@@ -271,15 +271,13 @@
 
         if (isSelected) {
             button.classList.remove('seat-selected');
-            if (seatId.startsWith('A') || seatId.startsWith('B')) {
-                button.classList.add('seat-vip');
-            } else if (seatId.startsWith('C') || seatId.startsWith('D')) {
-                button.classList.add('seat-premium');
-            } else if (seatId.startsWith('E')) {
-                button.classList.add('seat-vip');
-            } else {
-                button.classList.add('seat-available');
-            }
+            if (seatId.startsWith('C') || seatId.startsWith('D')) {
+    button.classList.add('seat-premium');
+} else if (seatId.startsWith('E')) {
+    button.classList.add('seat-vip');
+} else {
+    button.classList.add('seat-available');
+}
             selectedSeats = selectedSeats.filter(seat => seat.id !== seatId);
             totalAmount -= seatPrice;
         } else {
@@ -300,6 +298,7 @@
             summaryDiv.classList.remove('hidden');
             document.getElementById('summary-movie-name').textContent = decodeURIComponent(movie);
             document.getElementById('summary-show-time').textContent = decodeURIComponent(time);
+           
             document.getElementById('selected-seats').textContent = selectedSeats.map(s => `${s.id} (₹${s.price})`).join(', ');
             document.getElementById('ticket-count').textContent = selectedSeats.length;
             document.getElementById('total-amount').textContent = `Rs${totalAmount.toFixed(2)}`;
@@ -312,8 +311,8 @@
             const encodedMovie = encodeURIComponent(movie || "");
             const encodedTime = encodeURIComponent(time || "");
             const seatPrices = selectedSeats.map(s => s.price).join(',');
+            const theatre = params.get("theatre");
             const encodedTheatre = encodeURIComponent(theatre || "");
-
             // ✅ Correctly set the payment URL using Flask's Jinja rendering
             const paymentUrl = "{{ url_for('payment') }}";
 

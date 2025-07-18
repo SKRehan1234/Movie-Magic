@@ -148,7 +148,7 @@
 </div>
 </div>
   </section>
- <script>
+<script>
   function filterMovies() {
     const lang = document.getElementById("languageFilter").value;
     const theatre = document.getElementById("theatreFilter").value;
@@ -162,25 +162,30 @@
     });
   }
 
-  // Attach event listeners ONCE after the DOM loads
   window.onload = function () {
-    filterMovies(); // run once initially
+    filterMovies();
 
     document.getElementById("languageFilter").addEventListener("change", filterMovies);
     document.getElementById("theatreFilter").addEventListener("change", filterMovies);
 
-    document.body.addEventListener("click", function (e) {
-  if (e.target.classList.contains("book-btn")) {
-    e.preventDefault();
-    const movieId = e.target.dataset.id;
-    const theatre = document.getElementById("theatreFilter").value;
-    const href = (theatre === "all")
-      ? `seat_selection.html?id=${movieId}`
-      : `/seat_selection.html?id=${movieId}&theatre=${encodeURIComponent(theatre)}`;
-    window.location.href = href;
-  }
-});
-  }
+    const bookButtons = document.querySelectorAll(".details-btn");
+    const theatreSelect = document.getElementById("theatreFilter");
+
+    bookButtons.forEach(button => {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
+        const movieId = this.dataset.id;
+        const selectedTheatre = theatreSelect.value;
+
+        // Build new URL with movie ID and selected theatre
+        const baseUrl = this.href.split("?")[0];
+        const newUrl = `${baseUrl}?id=${movieId}&theatre=${encodeURIComponent(selectedTheatre)}`;
+
+        // Navigate to the new URL
+        window.location.href = newUrl;
+      });
+    });
+  };
 </script>
 </body>
 </html>
