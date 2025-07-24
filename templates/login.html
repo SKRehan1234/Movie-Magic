@@ -6,9 +6,9 @@
     <title>Login - Movie Magic</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-blue-600 min-h-screen flex items-center justify-center">
+<body class="bg-blue-600 bg-cover min-h-screen flex items-center justify-center" style="background-image: url('https://images.pexels.com/photos/32728014/pexels-photo-32728014.jpeg');">
 
-    <div class="bg-white rounded-lg shadow p-8 w-full max-w-md">
+    <div class="bg-purple-100 rounded-lg shadow p-8 w-full max-w-md">
         <a href="{{ url_for('index') }}" class="text-purple-600 hover:underline">← Back to home</a>
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Login to Movie Magic</h2>
         <form action="{{ url_for('login') }}" method="POST">
