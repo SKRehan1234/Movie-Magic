@@ -25,19 +25,27 @@ movies_table = dynamodb.Table('MovieMagicMovies')
 bookings_table = dynamodb.Table('MovieMagicBookings')
 
 # ------------------- Helper Functions ------------------- #
-def send_notification(booking, subject, message):
+def send_notification(user_name, movie_title):
+    subject = "🎟 Booking Confirmed"
+
+    message = f"""Hi {user_name},
+
+Your booking for '{movie_title}' has been confirmed!
+
+Thank you for choosing Movie Magic.
+Enjoy your show!
+"""
+
     try:
-        sns.publish(
+        response = sns.publish(
             TopicArn=SNS_TOPIC_ARN,
-            Subject=subject,
             Message=message,
-            MessageAttributes={
-                'email': {'DataType': 'String', 'StringValue': booking['booked_by']}
-            }
+            Subject=subject
         )
-        print("✅ Notification sent via SNS")
+        print("✅ SNS Message Published:", response['MessageId'])
     except Exception as e:
-        print("❌ SNS Error:", e)
+        print("❌ Failed to send SNS notification:", str(e))
+
 
 def get_movie_by_id(movie_id):
     try:
